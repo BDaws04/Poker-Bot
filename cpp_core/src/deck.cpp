@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <stdexcept>
+
 #include "../include/deck.h"
 
 Deck::Deck() {
@@ -27,4 +28,11 @@ card Deck::draw() {
 void Deck::reset() {
     front = 0;
     shuffle();
+}
+
+void Deck::shuffle_remaining() {
+    for (int i = front; i < 52; ++i) {
+        int j = rand() % (52 - front) + front;
+        std::swap(cards[i], cards[j]);
+    }
 }

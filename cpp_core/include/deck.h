@@ -14,6 +14,7 @@ struct Deck {
         ~Deck() = default;
         card draw();
         void reset();
+        void shuffle_remaining();
     private:
         card cards[52];
         int front = 0;
