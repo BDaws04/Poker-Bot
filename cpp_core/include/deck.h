@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <stdexcept>
 
 using card = std::pair<char, uint8_t>;
 

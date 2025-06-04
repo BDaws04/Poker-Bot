@@ -1,6 +1,9 @@
 #ifndef EVALUATOR_H
 #define EVALUATOR_H
 
+#include <cstdint>
+#include <cassert>
+
 #include "deck.h"
 
 using cs = uint16_t;

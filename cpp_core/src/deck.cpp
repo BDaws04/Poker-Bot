@@ -1,6 +1,3 @@
-#include <cstdint>
-#include <stdexcept>
-
 #include "../include/deck.h"
 
 Deck::Deck() {

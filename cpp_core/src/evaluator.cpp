@@ -1,6 +1,3 @@
-#include <cstdint>
-#include <cassert>
-
 #include "../include/evaluator.h"
 
 int evaluate_hand(const card hand[5]){
@@ -40,7 +37,7 @@ int evaluate_hand(const card hand[5]){
         else
             v -= 1;
     }
-    
+
     return v;
 }
 

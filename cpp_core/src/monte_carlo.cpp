@@ -1,5 +1,3 @@
-
-
 #include "../include/monte_carlo.h"
 
 std::pair<int, int> monte_carlo_simulation(const std::vector<card>& player_cards, std::vector<card>& river, int iterations) {
@@ -15,7 +13,7 @@ std::pair<int, int> monte_carlo_simulation(const std::vector<card>& player_cards
     }
 
     Deck deck(known_cards);
-    
+
     for (int i = 0; i < iterations; ++i){
         std::vector<card> drawn_cards = deck.draw_and_reshuffle(cards_required);
         std::vector<card> player_hand = river, opponent_hand = river;
@@ -30,5 +28,24 @@ std::pair<int, int> monte_carlo_simulation(const std::vector<card>& player_cards
             opponent_hand.push_back(drawn_cards[i]);
         }
 
+        assert(player_hand.size() == 7);
+        assert(opponent_hand.size() == 7);
+
+        auto player_combinations = generate_combinations<card, 5>(player_hand);
+        auto opponent_combinations = generate_combinations<card, 5>(opponent_hand);
+
+        int player_sum = 0, opponent_sum = 0;
+        for (int i = 0; i < player_combinations.size(); ++i) {
+            player_sum += evaluate_hand(player_combinations[i].data());
+            opponent_sum += evaluate_hand(opponent_combinations[i].data());
+        }
+
+        if (player_sum <= opponent_sum) {
+            ++wins;
+        } else {
+            ++losses;
+        }
     }
+
+    return {wins, losses};
 }
