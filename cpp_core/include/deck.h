@@ -15,6 +15,7 @@ struct Deck {
 
         card draw();
         std::vector<card> draw(int n);
+        std::vector<card> draw_and_reshuffle(int n);
         
         void reset();
         void shuffle_remaining();

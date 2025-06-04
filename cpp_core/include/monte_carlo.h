@@ -5,6 +5,6 @@
 
 #include "evaluator.h"
 
-int monte_carlo_simulation(const std::vector<card>& player_hand, const std::vector<card>& river, int iterations);
+int monte_carlo_simulation(const std::vector<card>& known_cards, int iterations);
 
 #endif

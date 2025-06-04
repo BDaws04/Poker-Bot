@@ -15,18 +15,34 @@ Deck::Deck(const std::vector<card>& known_cards) {
     if (known_cards.size() > 52) {
         throw std::invalid_argument("Too many known cards");
     }
+
+    std::vector<card> all_cards;
     char suits[] = {'H', 'D', 'C', 'S'};
-    int index = 0;
     for (int i = 0; i < 52; ++i) {
-        if (index < known_cards.size() && cards[i] == known_cards[index]) {
-            cards[i] = known_cards[index++];
+        all_cards.push_back({suits[i / 13], static_cast<uint8_t>(i % 13 + 2)});
+    }
+
+    for (const auto& kc : known_cards) {
+        auto it = std::find(all_cards.begin(), all_cards.end(), kc);
+        if (it != all_cards.end()) {
+            all_cards.erase(it);
         } else {
-            cards[i] = {suits[i / 13], static_cast<uint8_t>(i % 13 + 2)};
+            throw std::invalid_argument("Known card not found in deck");
         }
     }
-    front = index;
-    shuffle();
+
+    int idx = 0;
+    for (const auto& kc : known_cards) {
+        cards[idx++] = kc;
+    }
+    for (const auto& c : all_cards) {
+        cards[idx++] = c;
+    }
+
+    front = known_cards.size(); 
+    shuffle_remaining();  
 }
+
 
 void Deck::shuffle() {
     for (int i = 51; i > 0; --i) {
@@ -49,6 +65,18 @@ std::vector<card> Deck::draw(int n) {
     std::vector<card> drawn_cards(cards + front, cards + front + n);
     front += n;
     return drawn_cards;
+}
+
+std::vector<card> Deck::draw_and_reshuffle(int n) {
+    std::vector<card> result(n);
+    if (front + n > 52) {
+        throw std::out_of_range("Not enough cards to draw");
+    }
+    for (int i = 0; i < n; ++i){
+        result[i] = cards[front + i];
+    }
+    shuffle_remaining();
+    return result;
 }
 
 void Deck::reset() {
