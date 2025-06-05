@@ -1,9 +1,5 @@
 #include "../include/utils.h"
 
-#include <vector>
-#include <array>
-#include <stdexcept>
-
 template <typename T, size_t K>
 std::vector<std::array<T, K>> generate_combinations(const std::vector<T>& elements) {
     int n = (int)elements.size();
@@ -13,7 +9,7 @@ std::vector<std::array<T, K>> generate_combinations(const std::vector<T>& elemen
 
     std::vector<std::array<T, K>> result;
 
-    unsigned int bitmask = (1U << K) - 1;  // first bitmask with K ones
+    unsigned int bitmask = (1U << K) - 1; 
 
     while (bitmask < (1U << n)) {
         std::array<T, K> combo{};
